@@ -31,6 +31,10 @@ const getAllProducts = async (req,res) => {
 const getOneProducts = async (a,b) => {
     let wew = a.params.id
     let products = await Product.findOne({ where: {id: wew} })
+    if(!products){
+        b.status(400).send("No Record Found : 404")
+        return
+    }
     b.status(200).send(products)
 }
 
@@ -55,7 +59,6 @@ const deleteProducts = async (req,res) => {
 // get published product
 
 const getPublishedProducts = async (req,res) => {
- 
     const products = await Product.findAll({ where : {published: true}})
     res.status(200).send(products)
 }
